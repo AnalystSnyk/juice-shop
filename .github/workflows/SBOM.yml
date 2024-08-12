@@ -17,7 +17,7 @@ jobs:
       - name: Install Parlay
         run: |
           # Download the binary (replace with correct URL and version)
-          curl -L https://snyk.github.io/parlay/releases/download/v0.5.2/parlay_0.5.2_linux_amd64.tar.gz -o parlay.tar.gz
+          curl -L https://snyk.github.io/parlay/releases/download/v0.5.2/parlay_Linux_x86_64.tar.gz -o parlay.tar.gz
           # Extract the binary
           tar -xzf parlay.tar.gz
           # Move the binary to PATH (Optional)
