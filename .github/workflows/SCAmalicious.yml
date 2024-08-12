@@ -2,16 +2,21 @@ name: Snyk Test Malicious Package
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+    - master
 
 jobs:
   snyk-test:
     runs-on: ubuntu-latest
+    env: 
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
       - uses: actions/checkout@v3
 
       - name: Install Snyk
-        uses: snyk/actions/cli@master
+        run: |
+          sudo npm install -g snyk
+          snyk auth ${SNYK_TOKEN}
 
       - name: Run Snyk Test
         run: snyk test --json > snyk-report.json
