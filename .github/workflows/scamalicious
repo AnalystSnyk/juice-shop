@@ -1,0 +1,40 @@
+name: Snyk Test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  snyk-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Snyk
+        uses: snyk/actions/cli@master
+
+      - name: Run Snyk Test
+        run: snyk test --json > snyk-report.json
+
+      - name: Check for Malicious Packages
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Parse Snyk Report
+        run: |
+          #!/usr/bin/env node
+          const fs = require('fs');
+          const snykReport = JSON.parse(fs.readFileSync('snyk-report.json', 'utf8'));
+
+          let hasMaliciousPackage = false;
+          for (const package of snykReport.vulnerabilities) {
+            if (package.malicious === true) {
+              hasMaliciousPackage = true;
+              break;
+            }
+          }
+
+          if (hasMaliciousPackage) {
+            process.exit(1);
+          }
