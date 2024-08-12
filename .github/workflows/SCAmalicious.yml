@@ -18,6 +18,10 @@ jobs:
           sudo npm install -g snyk
           snyk auth ${SNYK_TOKEN}
 
+      - name: "Install Dependencies"
+        run: | 
+          npm i 
+          
       - name: Run Snyk Test
         run: snyk test --json > snyk-report.json
         continue-on-error: true
