@@ -2,7 +2,7 @@ name: Snyk Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   snyk-test:
