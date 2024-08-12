@@ -16,12 +16,15 @@ jobs:
 
       - name: Install Parlay
         run: |
-          # Download the binary (replace with correct URL and version)
-          curl -L https://snyk.github.io/parlay/releases/download/v0.5.2/parlay_Linux_x86_64.tar.gz -o parlay.tar.gz
-          # Extract the binary
-          tar -xzf parlay.tar.gz
-          # Move the binary to PATH (Optional)
-          mv parlay /usr/local/bin/
+          # Install Go (if not already installed)
+          curl -sSL https://raw.githubusercontent.com/golang/get/master/get.sh | bash
+          source /root/.bashrc  # Update PATH
+          go version # Verify Go installation
+
+          git clone https://github.com/snyk/parlay.git
+          cd parlay
+          go build -o parlay .
+          mv parlay /usr/local/bin/  
 
       - name: Generate SBOM
         run: snyk sbom --format cyclonedx1.4+json > sbom.json
