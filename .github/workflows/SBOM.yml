@@ -3,7 +3,7 @@ name: Generate and Store Enriched SBOM
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   generate-enriched-sbom:
